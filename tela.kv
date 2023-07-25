@@ -1,0 +1,177 @@
+#:import Factory kivy.factory.Factory
+#:import Label kivy.uix.label.Label
+#:import Image kivy.uix.image.Image
+#:import rgba kivy.utils.get_color_from_hex
+
+
+ScreenGen:
+    ScreenHome:
+    ScreenData:
+
+
+<ExportPDFPopup>:
+    title: 'Exported'
+    size_hint: None, None
+    size: "400dp", "200dp"
+    pdf_path: ''
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: "10dp"
+
+        MDLabel:
+            text: 'PDF exportado com sucesso!'
+            halign: 'center'
+            theme_text_color: "Primary"
+
+        BoxLayout:
+            spacing: "10dp"
+            size_hint_y: None
+            height: "48dp"
+
+            MDRaisedButton:
+                text: 'Abrir PDF'
+                font_size: 18
+                on_release: app.open_pdf(root.pdf_path)
+
+            MDRaisedButton:
+                text: 'Fechar'
+                font_size: 18
+                on_release: root.dismiss()
+
+
+
+
+<ScreenHome>:
+    name: "screenhome"
+
+    FloatLayout:
+        Image:
+            source: 'TELA2.png'
+            allow_stretch: True
+            keep_ratio: False
+            pos: self.pos
+            size: self.size
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: "10dp"
+            size_hint: None, None
+            size: "400dp", "250dp"  # Reduza a altura do BoxLayout para centralizar verticalmente
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}  # Centralize o BoxLayout
+
+            MDCard:
+                orientation: "vertical"
+                padding: "10dp"
+                spacing: "10dp"
+                md_bg_color: "#00022F"
+
+                MDTextField:
+                    id: cpf_input
+                    hint_text: "Digite seu CPF:"
+                    helper_text: "Apenas números"
+                    helper_text_mode: "persistent"
+                    max_text_length: 11
+                    size_hint_x: 1
+                    multiline: False
+                    height: "48dp"  # Defina a altura desejada
+
+
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: "48dp"
+                    MDRaisedButton:
+                        text: "Consultar"
+                        font_size: 18
+                        md_bg_color: "#0953CE"
+                        text_color: "#FFFFFF"
+                        on_release: app.search()
+                Widget:
+                    size_hint_y: None
+                    height: "40dp"
+
+<ScreenData>:
+    name: 'screendata'
+
+    MDCard:
+        orientation: "vertical"
+        padding: "10dp"
+        spacing: "10dp"
+
+        GridLayout:
+            cols: 2
+            spacing: "10dp"
+
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "Nome:"
+                    font_size: "16sp"
+                    theme_text_color: "Secondary"
+
+                MDLabel:
+                    id: idNome
+                    font_size: "12sp"
+                    text: "Registro Encontrado!"
+
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "CPF:"
+                    font_size: "16sp"
+                    theme_text_color: "Secondary"
+
+                MDLabel:
+                    id: idCPF
+                    font_size: "12sp"
+                    text: "CPF Encontrado!"
+
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "PROCESSO:"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+
+                MDLabel:
+                    id: idProcess
+                    font_size: "12sp"
+                    text: "Processo Encontrado!"
+
+            MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "RESPONSAVEL LANÇAMENTO:"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+
+                MDLabel:
+                    id: idRespLan
+                    font_size: "12sp"
+                    text: "Processo Encontrado!"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                MDLabel:
+                    text: "Data de Emissão:"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+                MDLabel:
+                    id: idDateI
+                    font_size: "12sp"
+                    text: "Não houve emissões!"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            MDRaisedButton:
+                text: "Voltar"
+                font_size: 18
+                on_release: app.root.current = 'screenhome'
+            MDRaisedButton:
+                text: "Exportar PDF"
+                font_size: 18
+                on_release: app.export_pdf()
